@@ -39,7 +39,7 @@ class Wikipedia:
     def __init__(self, lang):
         self.lang = lang
    
-    def __get_page(self, url):
+    def _get_page(self, url):
         request = urllib2.Request(url)
         request.add_header('User-Agent',
                            'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0)')
@@ -53,7 +53,7 @@ class Wikipedia:
    
     def article(self, article):
         url = url_article % (self.lang, urllib.quote_plus(article))
-        content = self.__get_page(url)
+        content = self._get_page(url)
        
         if content.upper().startswith('#REDIRECT'):
             match = re.match('(?i)#REDIRECT \[\[([^\[\]]+)\]\]', content)
@@ -68,7 +68,7 @@ class Wikipedia:
     def search(self, query, page=1, limit=10):
         offset = (page - 1) * limit
         url = url_search % (self.lang, urllib.quote_plus(query), offset, limit)
-        content = self.__get_page(url)    
+        content = self._get_page(url)    
         parsed = simplejson.loads(content)
         search = parsed['query']['search']
        
