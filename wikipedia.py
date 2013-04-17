@@ -26,7 +26,7 @@ if not home_folder:
     if not home_folder:
         home_folder = '.'   # Use the current folder on error.
 cookie_jar = cookielib.LWPCookieJar(
-                            os.path.join(home_folder, '.google-cookie'))
+                            os.path.join(home_folder, '.wikipedia-cookie'))
 try:
     cookie_jar.load()
 except Exception:
@@ -41,8 +41,9 @@ class Wikipedia:
    
     def _get_page(self, url):
         request = urllib2.Request(url)
-        request.add_header('User-Agent',
-                           'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0)')
+        request.add_header('User-Agent',                           
+                           'Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.10) Gecko/20100915\
+                            Ubuntu/10.04 (lucid) Firefox/3.6.10')
         cookie_jar.add_cookie_header(request)
         response = urllib2.urlopen(request)
         cookie_jar.extract_cookies(response, request)
